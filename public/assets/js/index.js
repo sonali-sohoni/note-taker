@@ -2,6 +2,7 @@ let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
+let deleteNoteBtn;
 let noteList;
 
 if (window.location.pathname === "/notes") {
@@ -61,8 +62,8 @@ const renderActiveNote = () => {
 	} else {
 		noteTitle.removeAttribute("readonly");
 		noteText.removeAttribute("readonly");
-
-		console.log("new note ", noteTitle.value, noteText.value);
+		noteTitle.value = "";
+		noteText.value = "";
 	}
 };
 
@@ -176,8 +177,10 @@ const getAndRenderNotes = () => getNotes().then(renderNoteList);
 if (window.location.pathname === "/notes") {
 	saveNoteBtn.addEventListener("click", handleNoteSave);
 	newNoteBtn.addEventListener("click", handleNewNoteView);
+	//	deleteNoteBtn.addEventListener("click", handleNoteDelete);
 	noteTitle.addEventListener("keyup", handleRenderSaveBtn);
 	noteText.addEventListener("keyup", handleRenderSaveBtn);
 }
 
 getAndRenderNotes();
+

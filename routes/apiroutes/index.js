@@ -6,6 +6,8 @@ const {
 	filterByQuery,
 	validateNote,
 	createNewNote,
+	deleteNote,
+	generateNoteId,
 } = require("../../lib/notes");
 router.get("/notes", (req, res) => {
 	//	console.log(notes);
@@ -32,12 +34,23 @@ router.get("/notes:id", (req, res) => {
 
 router.post("/notes", (req, res) => {
 	const note = req.body;
-	note.id = notes.length;
+	note.id = generateNoteId(notes);
 	if (validateNote(note)) {
 		const result = createNewNote(note, notes);
 		res.json(result);
 	} else {
 		res.status(400).send("Note object validation failed.");
+	}
+});
+
+router.delete("/notes/:delelteId", (req, res) => {
+	const result = deleteNote(req.params.delelteId, notes);
+	if (result) {
+		console.log("Api delete route worked. Note deleted successfully");
+		res.send("Success");
+	} else {
+		console.log("delete route failed");
+		res.send("error");
 	}
 });
 
